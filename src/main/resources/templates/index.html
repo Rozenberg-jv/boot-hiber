@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home page</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+<div class="central">
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Specialty</th>
+            <th>Salary</th>
+            <th>Date of employment</th>
+            <th>Number of projects</th>
+        </tr>
+        <tr th:each="e : ${list}">
+            <td th:text="${e.id}"></td>
+            <td th:text="${e.name}"></td>
+            <td th:text="${e.specialty.getSpecialty()}"></td>
+            <td th:text="${e.salary}"></td>
+            <td th:text="${#dates.format(e.dateOfEmployment, 'dd-MM-yyyy')}"></td>
+            <td th:text="${e.projects.size()}"></td>
+        </tr>
+    </table>
+</div>
+<div class="central">
+    <form action="#" th:action="@{/add}" th:object="${employeeDto}" method="post">
+        <div class="inlineform">
+            <input type="text" th:field="*{name}"/>
+            <select th:field="*{specialtyId}">
+                <option th:each="s : ${specialties}" th:value="${s.id}" th:text="${s.specialty}"></option>
+            </select>
+            <input type="number" th:field="*{salary}"/>
+            <input type="date" th:field="*{date}"/>
+        </div>
+        <input class="button" type="submit" value="ADD"/>
+    </form>
+</div>
+</body>
+</html>
